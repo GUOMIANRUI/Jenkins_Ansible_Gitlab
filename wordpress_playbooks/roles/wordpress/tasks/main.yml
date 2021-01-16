@@ -1,0 +1,65 @@
+- name: Update yum dependency
+  shell: 'yum update -y warn=False'
+
+- name: Disable system firewall
+  service: name=firewalld state=stopped
+
+- name: Disable SELINX
+  selinux: state=disabled
+
+- name: Setup epel yum source for nginx and mariadb(mysql)
+  yum: pkg=epel-release state=latest
+
+- name: Setup webtatic yum source for php-fpm
+  yum: name=https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+
+- name: Ensure nginx is at the latest version
+  yum: pkg=nginx state=latest
+
+- name: Write the nginx config file
+  template: src=roles/wordpress/templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf
+
+- name: Create nginx root folder
+  file: 'path={{ root }} state=directory owner={{ user }} group={{ user }} mode=0755'
+
+- name: Copy info.php to remote
+  copy: 'remote_src=no src=roles/wordpress/files/info.php dest=/data/www/info.php mode=0755'
+
+- name: Restart nginx service
+  service: name=nginx state=restarted
+
+- name: Setup php-fpm
+  command: 'yum install -y php70w php70w-fpm php70w-common php70w-mysql php70w-gd php70w-xml php70w-mbstring php70w-mcrypt warn=False'
+
+- name: Restart php-fpm service
+  service: name=php-fpm state=restarted
+
+- name: Copy php-fpm config file to remote
+  copy: 'remote_src=no src=roles/wordpress/files/www.conf dest=/etc/php-fpm.d/www.conf mode=0755 owner={{ user }} group={{ user }} force=yes'
+
+- name: Restart php-fpm service
+  service: name=php-fpm state=restarted
+
+- name: Run the health check locally
+  shell: "sh roles/wordpress/files/health_check.sh {{ server_name }} {{ port }}"
+  delegate_to: localhost
+  register: health_status
+
+- debug: msg="{{ health_status.stdout }}"
+
+- name: Setup mariadb(mysql)
+  command: "yum install -y mariadb mariadb-server warn=False"
+
+- name: Backup current www folder
+  shell: 'mv {{ root }} {{ backup_to }}'
+
+- name: Close git ssl verification
+  shell: 'git config --global http.sslVerify false'
+
+- name: Clone WordPress repo to remote
+  git: "repo=https://{{ gitlab_user | urlencode }}:{{ gitlab_pass | urlencode }}@gitlab.example.com/root/Wordpress-project.git dest=/data/www version={{ branch }}"
+  when: project == 'wordpress'
+
+- name: Change www folder permission
+  file: "path=/data/www mode=0755 owner={{ user }} group={{ user }}"
+

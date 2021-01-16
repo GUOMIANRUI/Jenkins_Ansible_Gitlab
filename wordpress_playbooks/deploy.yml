@@ -1,0 +1,8 @@
+- hosts: wordpress
+  gather_facts: true
+  remote_user: root
+  vars:
+      backup_to: "{{root}}_{{branch}}_{{ansible_date_time.epoch}}"
+  roles:
+    - wordpress
+

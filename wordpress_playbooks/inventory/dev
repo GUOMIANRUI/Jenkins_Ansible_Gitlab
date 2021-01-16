@@ -1,0 +1,12 @@
+[wordpress]
+test.example.com
+
+[wordpress:vars]
+server_name=test.example.com
+port=8080
+user=deploy
+worker_processes=2
+max_open_file=30000
+root=/data/www
+gitlab_user='root'
+gitlab_pass='12345678'
