@@ -16,13 +16,13 @@
 
 ### Jenkins
 
-http://49.234.26.139:8081/login?from=%2F  admin 19990910
+http://49.234.26.139:8081/login?from=%2F  admin
 
 ![](https://img.imgdb.cn/item/6002c3fa3ffa7d37b3efd321.png)
 
 ### Gitlab
 
-http://49.232.126.90:8091/    root 19990910
+http://49.232.126.90:8091/    root
 
 ![](https://img.imgdb.cn/item/6002c60e3ffa7d37b3f0d795.png)
 
