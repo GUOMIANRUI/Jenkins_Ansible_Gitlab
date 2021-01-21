@@ -1,0 +1,6 @@
+- name: install keepalived
+  yum: name=keepalived state=latest
+- name: install config file
+  template: src=roles/keepalived/templates/keepalived.conf dest=/etc/keepalived/keepalived.conf
+- name: start keepalived
+  service: name=keepalived state=started

@@ -5,4 +5,8 @@
       backup_to: "{{root}}_{{branch}}_{{ansible_date_time.epoch}}"
   roles:
     - wordpress
-
+- hosts: nginx
+  remote_user: root
+  roles:
+  - nginx
+  - keepalived

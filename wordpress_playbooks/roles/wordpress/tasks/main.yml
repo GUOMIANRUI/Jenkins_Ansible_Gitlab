@@ -20,7 +20,7 @@
   template: src=roles/wordpress/templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf
 
 - name: Create nginx root folder
-  file: 'path={{ root }} state=directory owner={{ user }} group={{ user }} mode=0755'
+  file: 'path=/data/www state=directory owner={{ user }} group={{ user }} mode=0755'
 
 - name: Copy info.php to remote
   copy: 'remote_src=no src=roles/wordpress/files/info.php dest=/data/www/info.php mode=0755'
@@ -57,7 +57,7 @@
   shell: 'git config --global http.sslVerify false'
 
 - name: Clone WordPress repo to remote
-  git: "repo=https://{{ gitlab_user | urlencode }}:{{ gitlab_pass | urlencode }}@gitlab.example.com/root/Wordpress-project.git dest=/data/www version={{ branch }}"
+  git: "repo=http://{{ gitlab_user | urlencode }}:{{ gitlab_pass | urlencode }}@49.232.126.90:8091/root/Wordpress-project.git dest=/data/www version={{ branch }}"
   when: project == 'wordpress'
 
 - name: Change www folder permission

@@ -1,12 +1,16 @@
+[nginx]
+182.61.46.239 keepalived_role=MASTER keepalived_pri=100
+172.17.0.3 keepalived_role=BACKUP keepalived_pri=98
+
 [wordpress]
-test.example.com
+test.tianyiyun.com
 
 [wordpress:vars]
-server_name=test.example.com
-port=8080
+server_name=test.tianyiyun.com 180.163.84.151
+port=8092
 user=deploy
 worker_processes=2
 max_open_file=30000
 root=/data/www
 gitlab_user='root'
-gitlab_pass='12345678'
+gitlab_pass='19990910'
