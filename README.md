@@ -294,6 +294,8 @@ http://49.232.126.90:8091/    root
 
 ### Zabbix
 
+http://49.232.126.90:8050/zabbix.php?action=dashboard.view&ddreset=1
+
 ![](https://img.imgdb.cn/item/600ff5573ffa7d37b3944ffa.png)
 
 ![](https://img.imgdb.cn/item/600ff5763ffa7d37b39460bb.png)
