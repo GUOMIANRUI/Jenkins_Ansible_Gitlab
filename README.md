@@ -2,7 +2,7 @@
 
 ## 简介
 
-Jenkins下建立并运行Pipeline Job，从Gitlab主机拉取剧本到Ansible主机，实现Nginx+Keepalived+MySQL+PHP+Wordpress自动化部署交付；
+Jenkins下建立并运行Pipeline Job，从Gitlab主机拉取剧本到Ansible主机，实现Nginx+Keepalived+MySQL+PHP-+Wordpress自动化部署交付；
 
 Jenkins下建立并运行Freestyle Job,从Gitlab主机拉取剧本到Ansible主机,自动部署Zabbix，在Zabbix Web 端配置自动发现进行扫描，监控四台云主机。
 
