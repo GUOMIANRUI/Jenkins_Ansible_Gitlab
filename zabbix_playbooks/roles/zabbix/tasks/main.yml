@@ -1,0 +1,23 @@
+- name: add zabbix repo
+  yum_repository:
+    name: zabbix
+    description: zabbix 3.0
+    baseurl: https://mirrors.aliyun.com/zabbix/zabbix/3.0/rhel/7/x86_64/
+    gpgcheck: no
+
+- name: add update repo
+  yum_repository:
+    name: update
+    description: non-supported
+    baseurl: https://mirrors.aliyun.com/zabbix/non-supported/rhel/7/x86_64/
+    gpgcheck: no
+
+- name: install zabbix-server
+  yum:
+    name: zabbix-server-mysql,zabbix-agent
+    state: present
+- name: Copy zabbix agent configuration file
+  template: src=roles/zabbix/templates/zabbix_agentd.conf.j2 dest=/etc/zabbix/zabbix_agentd.conf
+
+- name: Start zabbix agent
+  service: name=zabbix-agent state=started enabled=true 

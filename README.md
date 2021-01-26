@@ -2,16 +2,26 @@
 
 ## 简介
 
-Jenkins下建立并运行Pipeline Job，从Gitlab主机拉取剧本到Ansible主机，实现Nginx+Keepalived+MySQL+PHP+Wordpress自动化部署交付
+Jenkins下建立并运行Pipeline Job，从Gitlab主机拉取剧本到Ansible主机，实现Nginx+Keepalived+MySQL+PHP+Wordpress自动化部署交付；
+
+Jenkins下建立并运行Freestyle Job,从Gitlab主机拉取剧本到Ansible主机,自动部署Zabbix，在Zabbix Web 端配置自动发现进行扫描，监控四台云主机。
+
+Zabbix对高可用集群进行监控：
+
+* 监控两台Nginx服务器的Nginx并发数、已处理的客户端连接数、客户端请求数等等
+* 监控Web服务器的MySQL数据库的连接数、流量、缓冲池大小与利用率
+* 监控Gitlab服务器的磁盘空间利用率，通过微信进行告警
 
 ## 项目环境
 
-|         服务器          |    系统版本     |                   功能                    |                      演示地址                       |
-| :---------------------: | :-------------: | :---------------------------------------: | :-------------------------------------------------: |
-|   腾讯云49.234.26.139   | CentOS 7.5 64位 | Jenkins+Ansible<br/>+nginx1（Keepalived） | http://49.234.26.139:8081/login?from=%2F <br/>admin |
-| 百度智能云182.61.46.239 | CentOS 7.5 64位 |           nginx2（Keepalived）            |                  VIP:192.168.0.99                   |
-|   腾讯云49.232.126.90   | CentOS 7.5 64位 |                  Gitlab                   |        http://49.232.126.90:8091/ <br />root        |
-|  天翼云180.163.84.151   | CentOS 7.5 64位 |                 交付对象                  |             http://180.163.84.151:8092/             |
+|         服务器          |    系统版本     |                            功能                            |                      演示地址                       |
+| :---------------------: | :-------------: | :--------------------------------------------------------: | :-------------------------------------------------: |
+|   腾讯云49.234.26.139   | CentOS 7.5 64位 | Jenkins+Ansible<br/>+nginx1（Keepalived）<br/>Zabbix-agent | http://49.234.26.139:8081/login?from=%2F <br/>admin |
+| 百度智能云182.61.46.239 | CentOS 7.5 64位 |           nginx2（Keepalived）<br/>Zabbix-agent            |                  VIP:192.168.0.99                   |
+|   腾讯云49.232.126.90   | CentOS 7.5 64位 |                  Gitlab<br/>Zabbix-Server                  |        http://49.232.126.90:8091/ <br />root        |
+|  天翼云180.163.84.151   | CentOS 7.5 64位 |                 交付对象<br/>Zabbix-agent                  |             http://180.163.84.151:8092/             |
+
+![](https://img.imgdb.cn/item/600ff66a3ffa7d37b394e808.png)
 
 ## 最终效果
 
@@ -19,9 +29,13 @@ Jenkins下建立并运行Pipeline Job，从Gitlab主机拉取剧本到Ansible主
 
 http://49.234.26.139:8081/login?from=%2F  admin
 
-pipeline job 执行成功
+Keepalived-LNMP-pipeline job 执行成功
 
 ![](https://img.imgdb.cn/item/600a80bf3ffa7d37b314e1ad.png)
+
+Zabbix-freestyle-job执行成功
+
+![](https://img.imgdb.cn/item/600ff5283ffa7d37b3943264.png)
 
 输出信息如下：
 
@@ -277,3 +291,16 @@ http://49.232.126.90:8091/    root
 交付对象上的服务也已经正常启动 http://180.163.84.151:8092/
 
 ![](https://img.imgdb.cn/item/6002c65a3ffa7d37b3f0feb6.png)
+
+### Zabbix
+
+![](https://img.imgdb.cn/item/600ff5573ffa7d37b3944ffa.png)
+
+![](https://img.imgdb.cn/item/600ff5763ffa7d37b39460bb.png)
+
+### Grafana
+
+http://182.61.46.239:3000/d/CYJZEzLMz/180-163-84-151-webserver-mysql?orgId=1
+
+![](https://img.imgdb.cn/item/600ff6373ffa7d37b394c760.png)
+

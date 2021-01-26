@@ -1,0 +1,7 @@
+[webservers]
+180.163.84.151
+172.17.0.3
+182.61.46.239
+
+[webservers:vars]
+zabbix_server=49.232.126.90
